@@ -4,11 +4,14 @@ class Queue
   end
 
   def enqueue(el)
+    @queue << el
   end
 
   def dequeue
+    @queue.shift
   end
 
   def peek
-  end 
+    @queue.first
+  end
 end
