@@ -16,6 +16,10 @@ class Map
   end
 
   def delete(key)
+    value = [key, get(key)]
+    return nil if value[1] == nil
+
+    @map.delete(value)
   end
 
   def show
@@ -26,5 +30,5 @@ map = Map.new
 map.set(1,10)
 map.set(2,20)
 map.set(3,30)
-
-p map.get(3)
+map.delete(5)
+p map
