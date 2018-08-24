@@ -19,9 +19,3 @@ class Stack
     @stack.last
   end
 end
-
-sta = Stack.new
-sta.push(33)
-sta.push(66)
-p sta.peek
-p sta
