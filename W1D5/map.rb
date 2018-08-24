@@ -23,12 +23,6 @@ class Map
   end
 
   def show
+    p @map
   end
 end
-
-map = Map.new
-map.set(1,10)
-map.set(2,20)
-map.set(3,30)
-map.delete(5)
-p map
