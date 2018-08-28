@@ -29,18 +29,40 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
-    idx = start_pos + 1
+    idx = start_pos
+    # byebug
     until @cups[start_pos] == []
-      @cups[idx % 13] << @cups[start_pos].pop
       idx += 1
+      @cups[idx % 14] << @cups[start_pos].pop
     end
-    next_turn(idx % 13)
 
     render
+
+
+    end_idx = next_turn(idx % 14)
+
+    if end_idx == :switch
+      return :switch
+    elsif end_idx == :prompt
+      return :prompt
+    else
+      end_idx
+    end
   end
 
   def next_turn(ending_cup_idx)
-    # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    # helper method to determine whether #make_move returns :switch, :prompt,
+    # or ending_cup_idx
+    # byebug
+    # if @cups[ending_cup_idx].length == 1
+    if ending_cup_idx == 6 || ending_cup_idx == 13
+      return :prompt
+    elsif @cups[ending_cup_idx].length > 1
+      return ending_cup_idx
+    else
+      return :switch
+    end
+    # return ending_cup_idx
   end
 
   def render
@@ -52,8 +74,22 @@ class Board
   end
 
   def one_side_empty?
+    if @cups[0..5].any? && @cups[0..5].all? { |x| x == [] }
+      return true
+    elsif @cups[7..12].any? && @cups[7..12].all? { |x| x == [] }
+      return true
+    end
+    false
   end
 
   def winner
+    if @cups[6].length == @cups[13].length
+      return :draw
+    end
+    if @cups[6].length > @cups[13].length
+      return "Erica"
+    else
+      return "James"
+    end 
   end
 end

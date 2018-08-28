@@ -96,12 +96,14 @@ describe Board do
 
     context "when the turn ended on the current player's points cup" do
       it "returns :prompt" do
+        # byebug
         expect(board.make_move(9, "James")).to eq(:prompt)
       end
     end
 
     context "when the turn ended on a cup with stones already in it" do
       it "returns the cup's array index" do
+        # byebug
         expect(board.make_move(5, "Erica")).to eq(9)
       end
     end
