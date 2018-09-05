@@ -4,6 +4,7 @@ class People < ActiveRecord::Migration[5.2]
       t.string :name, null: false
       t.integer :house_id, null: false
       t.timestamps
-    end 
+    end
+    add_index :people, :house_id
   end
 end
