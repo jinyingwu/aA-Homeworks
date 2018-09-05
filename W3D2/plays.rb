@@ -32,19 +32,19 @@ class Play
     return nil unless play.length > 0
   end
 
-  # def self.find_by_playwright(name)
-  #   playwright = Playwright.find_by_name(name)
-  #   play = PlayDBConnection.instance.execute(<<-SQL, name)
-  #     SELECT
-  #       *
-  #     FROM
-  #       playwright
-  #     WHERE
-  #       name = ?
-  #   SQL
-  #
-  #   return nil unless play.length > 0
-  # end
+  def self.find_by_playwright(name) #not sure about this method will works
+    playwright = Playwright.find_by_name(name)
+    play = PlayDBConnection.instance.execute(<<-SQL, name)
+      SELECT
+        *
+      FROM
+        playwright
+      WHERE
+        name = ?
+    SQL
+
+    return nil unless play.length > 0
+  end
 
   def initialize(options)
     @id = options['id']
@@ -87,21 +87,33 @@ class Playwright
   end
 
   def self.find_by_name(name)
-    person = PlayDBConnection.instance.execute(<<-SQL, name)
+    preson = PlayDBConnection.instance.execute(<<-SQL, name)
       SELECT
         *
       FROM
-        playwright
+        playwrights
       WHERE
         name = ?
-    SQL
-    return nil unless person.length > 0
 
-    Playwright.new(person.first)
+    SQL
+    return nil unless preson.length > 0
+    Playwright.new(preson.first)
   end
 
   def initialize(options)
     @id = options['id']
     @name = options['name']
     @birth_year = options['birth_year']
+  end
+
+  def self.create
+    raise "#{self} the vales already in the database" unless @id
+
+    PlayDBConnection.instance.execute(<<-SQL, @name, @birth_year)
+      INSERT INTO
+      VALUES
+    SQL
+
+
+
   end
